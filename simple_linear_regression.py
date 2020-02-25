@@ -39,7 +39,7 @@ def simple_linear_regression():
     x = tf.compat.v1.placeholder(tf.float32, name='x')
     y = tf.compat.v1.placeholder(tf.float32, name='y')
     
-    #3. 初始化权重和偏置变量
+    #3. 创建权重和偏置变量
     weight = tf.Variable(0.0)
     bias = tf.Variable(0.0)
 
@@ -49,27 +49,27 @@ def simple_linear_regression():
     #5. 定义损失函数  求真实值和预测值的平方差之和
     loss = tf.square(y - output, name='loss')
 
-    #6. 选择梯度下降(权重更新模型)优化器 学习率设为0.1
-    optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
-    train = optimizer.minimize(loss, name='train')
+    #6. 选择梯度下降优化器 学习率设为0.01
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01).minimize(loss)
     
     #7. 初始化运算操作符
     init_op = tf.compat.v1.global_variables_initializer()
-    # 迭代次数100次
+
     iter_count = 100
+    #训练100次
     with tf.Session(config=config) as session:
         session.run(init_op)
         #写入事件文件
         # writer = tf.compat.v1.summary.FileWriter('graphs', session.graph)
         for i in range(iter_count):
             total_loss = 0
-            #每次遍历506个样本
+            #每次遍历506个样本 学习
             for x_data, y_data in zip(x_train, y_train):
-                #通过feed_dict将数据集传入
-                train_, loss_, output_ = session.run([train, loss, output],
+                #通过feed_dict将数据集传入  执行计算图  优化器 损失函数
+                optimizer_, loss_, output_ = session.run([optimizer, loss, output],
                                                 feed_dict={x:x_data, y:y_data})
                 total_loss += loss_
-                print('y的值：', y_data, '   y的点估计(最优预测)：', output_, '     loss函数的值:', loss_)
+                print('y的值：', y_data, '   y的点估计(最优预测)：', output_, '     loss函数的值:', loss_,  '     w权重的值:',session.run(weight), '     b偏置的值', session.run(bias))
             #加入到loss函数值的列表  loss函数总值 / 样本总量
             total.append(total_loss / samples_number)
             print('\n=========================Epoch {0}: Loss{1}===========================\n'.format(i, total[i]))
