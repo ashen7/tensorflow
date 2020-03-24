@@ -44,7 +44,7 @@ def train(GoogLeNet, image_size, version, batch_size):
     # saver持久化 保存模型
     saver = tf.train.Saver()
     init = tf.global_variables_initializer()
-    epochs = 2
+    epochs = 4
     train_num = int(len(train_sample) * 0.8)
     val_num = int(len(train_sample) * 0.2)
     assert len(train_sample) == len(train_label)
@@ -194,9 +194,9 @@ def plot_acc():
     plt.title('Validation Accuracy')
     plt.xlabel('epoch')
     plt.ylabel('val acc')
-    plt.plot(range(0, len(val_acc_list)), val_acc_list, 'bo', label='val acc')
+    plt.plot(range(0, len(val_acc_list)), val_acc_list, 'g', label='val acc')
     plt.plot(range(0, len(test_acc_list)), test_acc_list, 'r', label='test acc')
-    plt.legend(loc='best')
+    plt.legend(['validation accuracy', 'test accuracy'], loc='best')
     plt.show()
 
 if __name__ == '__main__':

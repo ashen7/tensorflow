@@ -1,7 +1,7 @@
 import pickle
 import numpy as np
 
-from image_augmentation import image_augment, image_augment_batch
+from tensorflow_samples.image_augmentation import image_augment, image_augment_batch
 
 # 加载数据(字节流)到python dict
 def unpickle(file):
@@ -24,7 +24,7 @@ def get_image(pixel):
 
 # 得到训练数据集
 def get_training_dataset(is_image_augmentation=False):
-    cifar = "cifar-10-batches-py/data_batch_"
+    cifar = "/home/yipeng/workspace/python/tensorflow_samples/cifar-10-batches-py/data_batch_"
     batch_label = list()
     label = list()
     sample = list()
@@ -60,7 +60,7 @@ def get_training_dataset(is_image_augmentation=False):
 
 # 得到测试数据集
 def get_test_dataset():
-    cifar = "cifar-10-batches-py/test_batch"
+    cifar = "/home/yipeng/workspace/python/tensorflow_samples/cifar-10-batches-py/test_batch"
     batch_label = list()
     filenames = list()
 
@@ -77,5 +77,5 @@ def get_test_dataset():
     return array, label
 
 if __name__ == '__main__':
-    a,b=get_training_dataset()
+    a, b = get_training_dataset()
     print(a[0].shape)

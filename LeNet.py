@@ -55,7 +55,7 @@ def train():
 
 def test():
     # 加载训练好的模型
-    model = load_model('lenet.h5')
+    model = load_model('model/lenet/lenet.h5')
     # 获得测试数据
     test_sample, test_label = get_test_dataset()
     print("test accuracy: {}%".format(np.sum(np.equal(test_label, np.argmax(model.predict(test_sample), 1))) / len(test_label) * 100))
